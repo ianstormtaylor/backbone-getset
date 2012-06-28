@@ -2,23 +2,12 @@
 //
 //     by Ian Storm Taylor
 //     https://github.com/ianstormtaylor/backbone-getset
+;(function (_, Backbone) {
+  if (_ === undefined) throw new Error('Couldn\'t find Underscore');
+  if (Backbone === undefined) throw new Error('Couldn\'t find Backbone');
 
-;(function (root, factory) {
-  // Set up appropriately for the environment.
-  // AMD
-  /*global define */
-  if (typeof define === 'function' && define.amd) {
-    define(['underscore'], function(_) { return factory(root, _); });
-  }
-  // Browser globals
-  else {
-    if (root.Backbone === undefined) throw new Error('Couldn\'t find Backbone');
-    root.Backbone.mixin || (root.Backbone.mixin = {});
-    root.Backbone.mixin.getset = factory(root, root._);
-  }
-})(this, function (root, _) {
-
-  var backboneGetSet = function (store) {
+  Backbone.mixin || (Backbone.mixin = {});
+  Backbone.mixin.getset = function (store) {
     store || (store = 'options');
 
     // Augment `_configure` to set all options on configure, so that if
@@ -55,6 +44,4 @@
     };
 
   };
-
-  return backboneGetSet;
-});
+}(_, Backbone));
